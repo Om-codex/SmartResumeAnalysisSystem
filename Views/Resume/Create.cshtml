@@ -1,0 +1,151 @@
+@model ResumeInputModel
+@{
+    ViewData["Title"] = "Create Resume";
+}
+
+<section class="page-shell">
+    <div class="page-title">
+        <p class="eyebrow">Resume Builder</p>
+        <h1>Create and Analyze Your Resume</h1>
+        <p>Fill the sections below. The system will create a structured resume and analyze it for your selected job role.</p>
+    </div>
+
+    <form class="resume-form" asp-controller="Resume" asp-action="Analyze" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <section class="form-panel">
+            <div class="section-heading">
+                <span>1</span>
+                <div>
+                    <h2>Personal Details</h2>
+                    <p>Basic profile information shown at the top of your resume.</p>
+                </div>
+            </div>
+            <div class="grid two">
+                <label>Full Name <input asp-for="FullName" placeholder="e.g., Rohan Sharma" /></label>
+                <label>Email <input asp-for="Email" placeholder="name@example.com" /></label>
+                <label>Phone <input asp-for="Phone" placeholder="9876543210" /></label>
+                <label>Address <input asp-for="Address" placeholder="City, State" /></label>
+                <label>LinkedIn <input asp-for="LinkedIn" placeholder="https://linkedin.com/in/username" /></label>
+                <label>GitHub <input asp-for="GitHub" placeholder="https://github.com/username" /></label>
+            </div>
+            <label>Career Objective <textarea asp-for="CareerObjective" rows="3" placeholder="Write a short career objective..."></textarea></label>
+            <span asp-validation-for="FullName" class="field-error"></span>
+            <span asp-validation-for="Email" class="field-error"></span>
+            <span asp-validation-for="Phone" class="field-error"></span>
+        </section>
+
+        <section class="form-panel">
+            <div class="section-heading">
+                <span>2</span>
+                <div>
+                    <h2>Target Job Role</h2>
+                    <p>The AI compares your resume with this role and description.</p>
+                </div>
+            </div>
+            <div class="grid two">
+                <label>Target Job Role <input asp-for="TargetJobRole" placeholder="e.g., .NET Developer" /></label>
+                <label>Small Job Description <textarea asp-for="JobDescription" rows="3" placeholder="Paste a short job description or responsibilities..."></textarea></label>
+            </div>
+            <span asp-validation-for="TargetJobRole" class="field-error"></span>
+        </section>
+
+        <section class="form-panel dynamic-section" data-section="Education">
+            <div class="section-heading with-action">
+                <span>3</span>
+                <div>
+                    <h2>Education</h2>
+                    <p>Add degree, institute, passing year, and score.</p>
+                </div>
+                <button class="btn small ghost" type="button" data-add="Education">Add Education</button>
+            </div>
+            <div class="items" id="EducationItems">
+                @for (var i = 0; i < Model.Education.Count; i++)
+                {
+                    <div class="item-row">
+                        <input name="Education[@i].Degree" value="@Model.Education[i].Degree" placeholder="Degree / Course" />
+                        <input name="Education[@i].Institution" value="@Model.Education[i].Institution" placeholder="Institution" />
+                        <input name="Education[@i].PassingYear" value="@Model.Education[i].PassingYear" placeholder="Passing Year" />
+                        <input name="Education[@i].Score" value="@Model.Education[i].Score" placeholder="CGPA / Percentage" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="form-panel dynamic-section" data-section="Skills">
+            <div class="section-heading with-action">
+                <span>4</span>
+                <div>
+                    <h2>Skills</h2>
+                    <p>Add technical skills, tools, and soft skills.</p>
+                </div>
+                <button class="btn small ghost" type="button" data-add="Skills">Add Skill</button>
+            </div>
+            <div class="items" id="SkillsItems">
+                @for (var i = 0; i < Model.Skills.Count; i++)
+                {
+                    <div class="item-row skill-row">
+                        <input name="Skills[@i].SkillName" value="@Model.Skills[i].SkillName" placeholder="Skill name" />
+                        <select name="Skills[@i].SkillType">
+                            <option value="Technical">Technical</option>
+                            <option value="Tool">Tool</option>
+                            <option value="Soft Skill">Soft Skill</option>
+                        </select>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="form-panel dynamic-section" data-section="Projects">
+            <div class="section-heading with-action">
+                <span>5</span>
+                <div>
+                    <h2>Projects</h2>
+                    <p>Describe academic, personal, or internship projects.</p>
+                </div>
+                <button class="btn small ghost" type="button" data-add="Projects">Add Project</button>
+            </div>
+            <div class="items" id="ProjectsItems">
+                @for (var i = 0; i < Model.Projects.Count; i++)
+                {
+                    <div class="item-row project-row">
+                        <input name="Projects[@i].Title" value="@Model.Projects[i].Title" placeholder="Project title" />
+                        <textarea name="Projects[@i].Description" rows="2" placeholder="Project description">@Model.Projects[i].Description</textarea>
+                        <input name="Projects[@i].TechnologiesUsed" value="@Model.Projects[i].TechnologiesUsed" placeholder="Technologies used" />
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="form-panel dynamic-section" data-section="Experience">
+            <div class="section-heading with-action">
+                <span>6</span>
+                <div>
+                    <h2>Experience / Internship</h2>
+                    <p>Add job, internship, training, or freelance experience.</p>
+                </div>
+                <button class="btn small ghost" type="button" data-add="Experience">Add Experience</button>
+            </div>
+            <div class="items" id="ExperienceItems">
+                @for (var i = 0; i < Model.Experience.Count; i++)
+                {
+                    <div class="item-row project-row">
+                        <input name="Experience[@i].CompanyName" value="@Model.Experience[i].CompanyName" placeholder="Company / Organization" />
+                        <input name="Experience[@i].Role" value="@Model.Experience[i].Role" placeholder="Role" />
+                        <input name="Experience[@i].Duration" value="@Model.Experience[i].Duration" placeholder="Duration" />
+                        <textarea name="Experience[@i].Responsibilities" rows="2" placeholder="Responsibilities">@Model.Experience[i].Responsibilities</textarea>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <div class="sticky-action no-print">
+            <button class="btn primary large" type="submit">Analyze Resume</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

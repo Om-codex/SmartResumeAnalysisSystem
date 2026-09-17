@@ -1,0 +1,108 @@
+@model ResumeAnalysisViewModel
+@{
+    ViewData["Title"] = "Analysis Result";
+}
+
+<section class="page-shell result-shell print-report">
+    <div class="result-header">
+        <div>
+            <p class="eyebrow">Resume Analysis Report</p>
+            <h1>@Model.Resume.FullName</h1>
+            <p>Target Role: <strong>@Model.Resume.TargetJobRole</strong></p>
+        </div>
+        <div class="score-card">
+            <span>@Model.Analysis.ResumeScore</span>
+            <small>/ 100</small>
+        </div>
+    </div>
+
+    @if (!Model.Analysis.UsedAi)
+    {
+        <div class="notice no-print">
+            This report uses local demo scoring. Reason: <strong>@Model.Analysis.OverallSummary</strong>
+        </div>
+    }
+
+    <div class="result-actions no-print">
+        <button class="btn primary" type="button" onclick="window.print()">Download PDF Report</button>
+        <a class="btn ghost" asp-controller="Resume" asp-action="Create">Analyze Another Resume</a>
+    </div>
+
+    <div class="result-grid">
+        <article class="panel wide">
+            <h2>Overall Summary</h2>
+            <p>@Model.Analysis.OverallSummary</p>
+            <p><strong>Job Role Fit:</strong> @Model.Analysis.JobRoleFit</p>
+        </article>
+
+        <article class="panel">
+            <h2>Strengths</h2>
+            <ul class="check-list">
+                @foreach (var item in Model.Analysis.Strengths)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        </article>
+
+        <article class="panel">
+            <h2>Weaknesses / Mistakes</h2>
+            <ul class="warning-list">
+                @foreach (var item in Model.Analysis.Weaknesses)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        </article>
+
+        <article class="panel">
+            <h2>Missing Skills</h2>
+            <div class="chips">
+                @foreach (var item in Model.Analysis.MissingSkills)
+                {
+                    <span>@item</span>
+                }
+            </div>
+        </article>
+
+        <article class="panel">
+            <h2>Keyword Suggestions</h2>
+            <div class="chips accent">
+                @foreach (var item in Model.Analysis.KeywordSuggestions)
+                {
+                    <span>@item</span>
+                }
+            </div>
+        </article>
+
+        <article class="panel wide">
+            <h2>Improvement Suggestions</h2>
+            <ul>
+                @foreach (var item in Model.Analysis.Improvements)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        </article>
+
+        <article class="panel wide">
+            <h2>Project Suggestions</h2>
+            <ul>
+                @foreach (var item in Model.Analysis.ProjectSuggestions)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        </article>
+
+        <article class="panel wide">
+            <h2>Suggested Career Objective</h2>
+            <p>@Model.Analysis.ObjectiveSuggestion</p>
+        </article>
+    </div>
+
+    <article class="resume-preview panel">
+        <h2>Structured Resume Preview</h2>
+        <pre>@Model.StructuredResume</pre>
+    </article>
+</section>

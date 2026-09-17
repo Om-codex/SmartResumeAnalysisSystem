@@ -1,0 +1,9 @@
+{
+  "name": "Smart Resume Analysis System",
+  "short_name": "Resume AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef3ff",
+  "theme_color": "#6457ff",
+  "description": "AI-assisted resume scoring and improvement suggestions for college mini project."
+}

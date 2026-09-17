@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero page-shell">
+    <div class="hero-content">
+        <p class="eyebrow">AI-Integrated Mini Project</p>
+        <h1>Smart Resume Analysis System</h1>
+        <p class="hero-text">
+            Enter your education, skills, projects, and experience. Get a structured resume preview,
+            AI-based resume score, role-specific improvements, missing skills, and a printable PDF report.
+        </p>
+        <div class="actions">
+            <a class="btn primary" asp-controller="Resume" asp-action="Create">Start Resume Analysis</a>
+            <a class="btn ghost" href="#features">View Features</a>
+        </div>
+    </div>
+    <div class="hero-card">
+        <div class="score-ring">AI</div>
+        <h2>Role-Based Suggestions</h2>
+        <p>Designed for simple college projects using ASP.NET Core MVC, C#, string handling, and a Gemini API integration.</p>
+    </div>
+</section>
+
+<section class="page-shell feature-grid" id="features">
+    <article class="feature-card">
+        <span>01</span>
+        <h3>Structured Resume</h3>
+        <p>Displays personal details, education, skills, projects, and experience in a clean resume format.</p>
+    </article>
+    <article class="feature-card">
+        <span>02</span>
+        <h3>AI Score</h3>
+        <p>Uses Gemini AI to score the resume based on the target job role and job description.</p>
+    </article>
+    <article class="feature-card">
+        <span>03</span>
+        <h3>PDF Report</h3>
+        <p>Print or save a PDF report containing the score, mistakes, missing skills, and improvements.</p>
+    </article>
+</section>

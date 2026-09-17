@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#6457ff" />
+    <title>@ViewData["Title"] - Smart Resume Analysis</title>
+    <link rel="manifest" href="~/manifest.webmanifest" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header no-print">
+        <a class="brand" asp-controller="Home" asp-action="Index">Smart Resume AI</a>
+        <nav>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Resume" asp-action="Create">Create Resume</a>
+            <button class="theme-toggle" type="button" id="themeToggle">Dark Mode</button>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer no-print">
+        <span>College Mini Project | ASP.NET Core MVC, C#, String Handling, Gemini AI</span>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
