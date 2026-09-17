@@ -3,7 +3,7 @@ WORKDIR /src
 COPY *.csproj .
 RUN dotnet restore
 COPY . .
-RUN rm -rf /src/obj && dotnet publish -c Release --no-restore -o /app/publish
+RUN rm -rf /src/obj && dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
